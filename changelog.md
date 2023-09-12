@@ -1,3 +1,7 @@
+0.0.1.2 2023-09-12
+==================
+- byobu: add $DBUS_SESSION_BUS_ADDRESS
+
 0.0.1.1 2023-05-24
 ==================
 - byobu: add $DISPLAY

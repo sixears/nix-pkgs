@@ -8,6 +8,7 @@ esac
 
 exec                                                                          \
   env -i USER=$USER HOME=$HOME TERM=$TERM                                     \
+         DBUS_SESSION_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS"                 \
          DISPLAY=$DISPLAY XAUTHORITY=''${XAUTHORITY:-$HOME/.Xauthority}       \
          PATH=${pkgs.byobu}/bin:${pkgs.tmux}/bin:/run/current-system/sw/bin   \
        ${pkgs.byobu}/bin/byobu "$@"
