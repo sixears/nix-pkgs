@@ -6,6 +6,7 @@ case "$TERM" in
   rxvt-unicode-256color ) TERM=vt102 ;;
 esac
 
+# byobu particularly relies on the path to access its own utility programs :-(
 exec                                                                          \
   env -i USER=$USER HOME=$HOME TERM=$TERM                                     \
          DBUS_SESSION_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS"                 \
