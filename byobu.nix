@@ -10,7 +10,8 @@ esac
 exec                                                                          \
   env -i USER="$USER" HOME="$HOME" TERM="$TERM"                               \
          DBUS_SESSION_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS"                 \
-         XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR" SWAYSOCK="$SWAYSOCK"              \
+         XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR"                                   \
+         WAYLAND_DISPLAY="$WAYLAND_DISPLAY" SWAYSOCK="$SWAYSOCK"              \
          DISPLAY="$DISPLAY" XAUTHORITY="''${XAUTHORITY:-$HOME/.Xauthority}"   \
          PATH="${pkgs.byobu}/bin:${pkgs.tmux}/bin:/run/current-system/sw/bin" \
        ${pkgs.byobu}/bin/byobu "$@"
