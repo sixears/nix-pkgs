@@ -18,8 +18,9 @@
       in
         rec {
           packages = flake-utils.lib.flattenTree (with pkgs; {
-            touchpad = import ./touchpad.nix { inherit pkgs bash-header; };
-            byobu    = import ./byobu.nix { inherit pkgs; };
+            touchpad      = import ./touchpad.nix { inherit pkgs bash-header; };
+            byobu         = import ./byobu.nix    { inherit pkgs; };
+            swap-summarize= import ./swap-summarize.nix { inherit pkgs; };
           });
         }
     );
