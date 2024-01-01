@@ -9,6 +9,8 @@ use 5.30.0;
 use strict;
 use warnings;
 
+my ($total, $used);
+
 while (<>) {
   chomp;
   my @cols = split ' ', $_;
