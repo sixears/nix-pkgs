@@ -13,14 +13,17 @@
   outputs = { self, nixpkgs, flake-utils, bashHeader }:
     flake-utils.lib.eachSystem ["x86_64-linux"] (system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
-        bash-header = bashHeader.packages.${system}.bash-header;
+        pkgs           = nixpkgs.legacyPackages.${system};
+        bash-header    = bashHeader.packages.${system}.bash-header;
+        swap-summarize = import ./swap-summarize.nix { inherit pkgs; };
       in
         rec {
           packages = flake-utils.lib.flattenTree (with pkgs; {
-            touchpad      = import ./touchpad.nix { inherit pkgs bash-header; };
-            byobu         = import ./byobu.nix    { inherit pkgs; };
-            swap-summarize= import ./swap-summarize.nix { inherit pkgs; };
+            byobu        = import ./byobu.nix   { inherit pkgs; };
+            swap-summary = import ./swap-summary.nix
+                                                { inherit pkgs swap-summarize;};
+            touchpad     = import ./touchpad.nix
+                                                { inherit pkgs bash-header; };
           });
         }
     );
