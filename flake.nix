@@ -19,11 +19,12 @@
       in
         rec {
           packages = flake-utils.lib.flattenTree (with pkgs; {
-            byobu        = import ./byobu.nix   { inherit pkgs; };
+#            byobu        = import ./byobu.nix  { inherit pkgs; };
             swap-summary = import ./swap-summary.nix
-                                                { inherit pkgs swap-summarize;};
+                                               { inherit pkgs swap-summarize; };
             touchpad     = import ./touchpad.nix
-                                                { inherit pkgs bash-header; };
+                                               { inherit pkgs bash-header; };
+            flock-pid-run = import ./flock-pid-run.nix { inherit pkgs; };
           });
         }
     );
