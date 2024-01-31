@@ -24,6 +24,7 @@
                                                { inherit pkgs swap-summarize; };
             touchpad     = import ./touchpad.nix
                                                { inherit pkgs bash-header; };
+            vlcp          = import ./vlcp.nix { inherit pkgs; };
             flock-pid-run = import ./flock-pid-run.nix { inherit pkgs; };
           });
         }
