@@ -20,11 +20,12 @@
         rec {
           packages = flake-utils.lib.flattenTree (with pkgs; {
 #            byobu        = import ./byobu.nix  { inherit pkgs; };
-            swap-summary = import ./swap-summary.nix
+            swap-summary  = import ./swap-summary.nix
                                                { inherit pkgs swap-summarize; };
-            touchpad     = import ./touchpad.nix
+            touchpad      = import ./touchpad.nix
                                                { inherit pkgs bash-header; };
-            vlcp          = import ./vlcp.nix { inherit pkgs; };
+            pidkill       = import ./pidkill.nix       { inherit pkgs; };
+            vlcp          = import ./vlcp.nix          { inherit pkgs; };
             flock-pid-run = import ./flock-pid-run.nix { inherit pkgs; };
           });
         }
