@@ -16,8 +16,11 @@
         pkgs           = nixpkgs.legacyPackages.${system};
         bash-header    = bashHeader.packages.${system}.bash-header;
         swap-summarize = import ./swap-summarize.nix { inherit pkgs; };
+        vlc-lockfile = "/run/user/$uid/vlc.pid";
       in
         rec {
+          settings = { inherit vlc-lockfile; };
+
           packages = flake-utils.lib.flattenTree (with pkgs; {
 #            byobu        = import ./byobu.nix  { inherit pkgs; };
             swap-summary  = import ./swap-summary.nix
