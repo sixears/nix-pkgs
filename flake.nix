@@ -22,7 +22,6 @@
           settings = { inherit vlc-lockfile; };
 
           packages = flake-utils.lib.flattenTree (with pkgs; {
-#            byobu        = import ./byobu.nix  { inherit pkgs; };
             swap-summary  = import ./swap-summary.nix
                                                { inherit pkgs swap-summarize; };
             touchpad      = import ./touchpad.nix
@@ -30,6 +29,13 @@
             pidkill       = import ./pidkill.nix       { inherit pkgs; };
             vlcp          = import ./vlcp.nix          { inherit pkgs; };
             flock-pid-run = import ./flock-pid-run.nix { inherit pkgs; };
+            replace       =
+              let
+                src             = pkgs.lib.strings.fileContents ./replace.hs;
+                libraries       = with pkgs.haskellPackages; [ classy-prelude ];
+                writeHaskellBin = pkgs.writers.writeHaskellBin;
+              in
+                writeHaskellBin "replace" { inherit libraries; } src;
           });
         }
     );
