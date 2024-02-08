@@ -1,3 +1,7 @@
+0.0.9.1 2024-02-08
+==================
+- fix required libs for replace.hs
+
 0.0.9.0 2024-02-08
 ==================
 - replace now uses Options.Applicative, supports '--', '--help', and uses pairs of

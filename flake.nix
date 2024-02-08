@@ -32,7 +32,10 @@
             replace       =
               let
                 src             = pkgs.lib.strings.fileContents ./replace.hs;
-                libraries       = with pkgs.haskellPackages; [ classy-prelude ];
+                libraries       =
+                  with pkgs.haskellPackages; [ base-unicode-symbols
+                                               classy-prelude
+                                               optparse-applicative ];
                 writeHaskellBin = pkgs.writers.writeHaskellBin;
               in
                 writeHaskellBin "replace" { inherit libraries; } src;
