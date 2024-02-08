@@ -1,3 +1,8 @@
+0.0.9.0 2024-02-08
+==================
+- replace now uses Options.Applicative, supports '--', '--help', and uses pairs of
+  arguments
+
 0.0.8.0 2024-02-07
 ==================
 - +replace
