@@ -1,3 +1,7 @@
+0.0.9.2 2024-02-16
+==================
+- better error messages from pidkill
+
 0.0.9.1 2024-02-08
 ==================
 - fix required libs for replace.hs
