@@ -1,3 +1,7 @@
+0.0.10.1 2024-02-18
+===================
+- cpu-temp output '?' if no line matched
+
 0.0.10.0 2024-02-18
 ===================
 - +cpu-temperature,+cpu-temp
