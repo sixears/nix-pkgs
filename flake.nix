@@ -15,19 +15,22 @@
       let
         pkgs           = nixpkgs.legacyPackages.${system};
         bash-header    = bashHeader.packages.${system}.bash-header;
-        swap-summarize = import ./swap-summarize.nix { inherit pkgs; };
         vlc-lockfile = "/run/user/$uid/vlc.pid";
       in
-        rec {
+        {
           settings = { inherit vlc-lockfile; };
 
-          packages = flake-utils.lib.flattenTree (with pkgs; {
+          packages = flake-utils.lib.flattenTree (with pkgs; rec {
+            swap-summarize = import ./swap-summarize.nix { inherit pkgs; };
             swap-summary  = import ./swap-summary.nix
                                                { inherit pkgs swap-summarize; };
+            cpu-temperature  = import ./cpu-temperature.nix
+                                               { inherit pkgs cpu-temp; };
             touchpad      = import ./touchpad.nix
                                                { inherit pkgs bash-header; };
             pidkill       = import ./pidkill.nix       { inherit pkgs; };
             vlcp          = import ./vlcp.nix          { inherit pkgs; };
+            cpu-temp      = import ./cpu-temp.nix      { inherit pkgs; };
             flock-pid-run = import ./flock-pid-run.nix { inherit pkgs; };
             replace       =
               let

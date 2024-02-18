@@ -1,3 +1,7 @@
+0.0.10.0 2024-02-18
+===================
+- +cpu-temperature,+cpu-temp
+
 0.0.9.2 2024-02-16
 ==================
 - better error messages from pidkill
