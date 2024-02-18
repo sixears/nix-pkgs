@@ -13,12 +13,14 @@
   outputs = { self, nixpkgs, flake-utils, bashHeader }:
     flake-utils.lib.eachSystem ["x86_64-linux"] (system:
       let
-        pkgs           = nixpkgs.legacyPackages.${system};
-        bash-header    = bashHeader.packages.${system}.bash-header;
-        vlc-lockfile = "/run/user/$uid/vlc.pid";
+        pkgs              = nixpkgs.legacyPackages.${system};
+        bash-header       = bashHeader.packages.${system}.bash-header;
       in
         {
-          settings = { inherit vlc-lockfile; };
+          settings = { vlc-lockfile      = "/run/user/$uid/vlc.pid";
+                       swap-summary-fifo = "/run/user/$uid/swap-summary";
+                       cpu-temp-fifo     = "/run/user/$uid/cpu-temp";
+                     };
 
           packages = flake-utils.lib.flattenTree (with pkgs; rec {
             swap-summarize = import ./swap-summarize.nix { inherit pkgs; };
