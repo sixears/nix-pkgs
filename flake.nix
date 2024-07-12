@@ -2,10 +2,10 @@
   description = "miscellaneous nix pkgs, grouped in one place";
 
   inputs = {
-    nixpkgs.url     = github:nixos/nixpkgs/be44bf67; # nixos-22.05 2022-10-15
+    nixpkgs.url     = github:NixOS/nixpkgs/938aa157; # nixos-24.05 2024-06-20
     flake-utils.url = github:numtide/flake-utils/c0e246b9;
     bashHeader      = {
-      url    = github:sixears/bash-header/5206b087;
+      url    = github:sixears/bash-header/r0.0.4.0;
       inputs = { nixpkgs.follows = "nixpkgs"; };
     };
   };
@@ -34,6 +34,19 @@
             vlcp          = import ./vlcp.nix          { inherit pkgs; };
             cpu-temp      = import ./cpu-temp.nix      { inherit pkgs; };
             flock-pid-run = import ./flock-pid-run.nix { inherit pkgs; };
+
+            pa-mic-toggle      =
+              let
+                src = import ./pa-mic-toggle.nix { inherit pkgs bash-header; };
+              in
+                pkgs.writers.writeBashBin "pac-mic-toggle" src;
+
+            example      =
+              let
+                src = import ./example.nix { inherit pkgs bash-header; };
+              in
+                pkgs.writers.writeBashBin "example" src;
+
             replace       =
               let
                 src             = pkgs.lib.strings.fileContents ./replace.hs;
