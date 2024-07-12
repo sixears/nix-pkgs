@@ -39,7 +39,7 @@
               let
                 src = import ./pa-mic-toggle.nix { inherit pkgs bash-header; };
               in
-                pkgs.writers.writeBashBin "pac-mic-toggle" src;
+                pkgs.writers.writeBashBin "pa-mic-toggle" src;
 
             example      =
               let
