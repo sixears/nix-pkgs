@@ -2,7 +2,7 @@
   description = "miscellaneous nix pkgs, grouped in one place";
 
   inputs = {
-    nixpkgs.url     = github:NixOS/nixpkgs/938aa157; # nixos-24.05 2024-06-20
+    nixpkgs.url     = github:NixOS/nixpkgs/d9d87c51; # nixos-24.11 2024-12-11
     flake-utils.url = github:numtide/flake-utils/c0e246b9;
     bashHeader      = {
       url    = github:sixears/bash-header/r0.0.4.0;

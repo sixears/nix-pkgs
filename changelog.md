@@ -1,3 +1,7 @@
+0.0.12.0 2025-04-08
+===================
+- fix cpu-temperature to not spam stderr (which is sent to sway.log)
+
 0.0.11.0 2024-07-12
 ===================
 - +pa-mic-toggle

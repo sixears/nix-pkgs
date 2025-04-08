@@ -1,5 +1,3 @@
-# -*- mode: perl -*-
-
 { pkgs }: pkgs.writers.writePerlBin "cpu-temp" { libraries = [ ]; } ''
 # Pragma ------------------------------
 
@@ -19,5 +17,5 @@ say "?" unless $said;
 ''
 
 # Local Variables:
-# mode: sh
+# mode: perl
 # End:
