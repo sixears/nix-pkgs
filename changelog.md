@@ -1,3 +1,7 @@
+0.0.13.0 2025-04-11
+===================
+- move path-edit, paths here from base-scripts so they can be shared with, emacs-server
+
 0.0.12.0 2025-04-08
 ===================
 - fix cpu-temperature to not spam stderr (which is sent to sway.log)

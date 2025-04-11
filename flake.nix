@@ -4,17 +4,24 @@
   inputs = {
     nixpkgs.url     = github:NixOS/nixpkgs/d9d87c51; # nixos-24.11 2024-12-11
     flake-utils.url = github:numtide/flake-utils/c0e246b9;
+    hpkgs1          = {
+      url    = github:sixears/hpkgs1/r0.0.41.0;
+#      inputs = { nixpkgs.follows = "nixpkgs"; };
+    };
     bashHeader      = {
       url    = github:sixears/bash-header/r0.0.4.0;
       inputs = { nixpkgs.follows = "nixpkgs"; };
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, bashHeader }:
+  outputs = { self, nixpkgs, flake-utils, hpkgs1, bashHeader }:
     flake-utils.lib.eachSystem ["x86_64-linux"] (system:
       let
-        pkgs              = nixpkgs.legacyPackages.${system};
-        bash-header       = bashHeader.packages.${system}.bash-header;
+        pkgs        = nixpkgs.legacyPackages.${system};
+        bash-header = bashHeader.packages.${system}.bash-header;
+        hpkgs       = hpkgs1.packages.${system};
+        hlib        = hpkgs1.lib.${system};
+        mkHBin      = hlib.mkHBin;
       in
         {
           settings = { vlc-lockfile      = "/run/user/$uid/vlc.pid";
@@ -47,7 +54,7 @@
               in
                 pkgs.writers.writeBashBin "example" src;
 
-            replace       =
+            replace =
               let
                 src             = pkgs.lib.strings.fileContents ./replace.hs;
                 libraries       =
@@ -57,7 +64,16 @@
                 writeHaskellBin = pkgs.writers.writeHaskellBin;
               in
                 writeHaskellBin "replace" { inherit libraries; } src;
+
+            path-edit = (mkHBin "path-edit" ./path-edit.hs {
+              libs = p: with p; with hlib.hpkgs;
+                [ directory path QuickCheck split tasty tasty-hunit
+                  tasty-quickcheck ];
+            }).pkg;
+
+            paths = import ./paths.nix { inherit pkgs bash-header path-edit; };
           });
         }
     );
 }
+
