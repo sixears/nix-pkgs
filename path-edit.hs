@@ -283,7 +283,7 @@ readPathElem = first show . parseAbsDir
 ----------------------------------------
 
 readPathList :: String -> (PathList, Errs)
-readPathList = first reverse <$> foldl readPathAccum ([],[]) . splitOn ":"
+readPathList = first reverse <$> foldl readPathAccum ([],[]) . filter (/= "") . splitOn ":"
 
 ----------------------------------------
 
@@ -405,7 +405,7 @@ unitTests = testGroup "unit tests" [ mkPathsUnitTests, readPathListTests ]
 
 readPathListTests :: TestTree
 readPathListTests = testGroup "readPathList"
-  [ testCase "empty list" $ readPathList "" @?= ([],["InvalidAbsDir \"\""])
+  [ testCase "empty list" $ readPathList "" @?= ([],[])
   , testCase "/foo" $ readPathList "/foo" @?= ([[absdir|/foo/|]],[])
   , testCase "bar" $ readPathList "bar" @?= ([],["InvalidAbsDir \"bar\""])
   ]
@@ -434,6 +434,11 @@ mkPathsUnitTests = testGroup "mkPaths" $
                                    <> "/opt/hyper local/man")
                         ]
 
+      empty_env :: Environment
+      empty_env = Environment [ ("PATH",    "")
+                              , ("MANPATH", "")
+                              ]
+
       cmp' :: String -> PathEnv -> PathEnv -> TestTree
       cmp' n got expected = testGroup n $
         let (pathGot   , pathGotEs)    = _PATH    got
@@ -450,6 +455,11 @@ mkPathsUnitTests = testGroup "mkPaths" $
              (mkPaths ModeIdentity env)
              (PathEnv ([ usr_bin, hyper_local_bin ], [])
                       ([ usr_man, hyper_local_share_man, hyper_local_man ], []))
+
+      , cmp' "identity - empty"
+             (mkPaths ModeIdentity empty_env)
+             (PathEnv ([], [])
+                      ([], []))
 
       , cmp' "append"
              (mkPaths (ModeAppendPaths [nix_profile]) env)

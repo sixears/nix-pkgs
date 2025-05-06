@@ -1,3 +1,7 @@
+0.0.14.0 2025-05-06
+===================
+- path-edit: handle empty paths without crashing
+
 0.0.13.0 2025-04-11
 ===================
 - move path-edit, paths here from base-scripts so they can be shared with, emacs-server
