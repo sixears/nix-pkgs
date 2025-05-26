@@ -1,3 +1,7 @@
+0.0.15.0 2025-05-26
+===================
+- +tmux, tmux-man
+
 0.0.14.0 2025-05-06
 ===================
 - path-edit: handle empty paths without crashing

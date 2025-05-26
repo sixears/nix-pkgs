@@ -2,7 +2,9 @@
   description = "miscellaneous nix pkgs, grouped in one place";
 
   inputs = {
-    nixpkgs.url     = github:NixOS/nixpkgs/d9d87c51; # nixos-24.11 2024-12-11
+    # nixpkgs.url     = github:NixOS/nixpkgs/d9d87c51; # nixos-24.11 2024-12-11
+    # upgraded for tmux-poweline, which is not available in 2024-12-11
+    nixpkgs.url     = github:NixOS/nixpkgs/72841a4a; # nixos-24.11 2025-05-21
     flake-utils.url = github:numtide/flake-utils/c0e246b9;
     hpkgs1          = {
       url    = github:sixears/hpkgs1/r0.0.41.0;
@@ -72,6 +74,28 @@
             }).pkg;
 
             paths = import ./paths.nix { inherit pkgs bash-header path-edit; };
+
+            tmux =
+              let tmux-conf =
+                    pkgs.writeTextFile { name = "tmux.conf"; text=''
+                      unbind C-b
+                      set -g prefix C-' '
+                      # setw -g utf8 on
+                      # set -g status-utf8 on
+                      ## bind D source-file ~/rc/tmux/dev
+                      ## bind E resize-pane -t 0 -x 81
+                      # set display-panes-time 4000
+                      share=${pkgs.tmuxPlugins.tmux-powerline}/share
+                      powerline=$share/tmux-plugins/powerline
+                      run-shell $powerline/main.tmux
+                    '';};
+              in  pkgs.writers.writeBashBin "tmux" ''
+                    id=${pkgs.coreutils}/bin/id
+                    export XDG_CONFIG_HOME=$HOME/rc/tmux
+                    export TMUX_TMPDIR=/run/user/$($id --user)
+                    exec ${pkgs.tmux}/bin/tmux -f ${tmux-conf} "$@"
+                  '';
+            tmux-man = pkgs.tmux.man;
           });
         }
     );
